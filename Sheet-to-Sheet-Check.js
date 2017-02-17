@@ -1,6 +1,23 @@
 // Dependant on: https://github.com/preactive/GAS-Helper-Function/blob/master/gco_.js
 // Dependant on: https://github.com/preactive/GAS-Helper-Function/blob/master/isEmpty_.js
+/*
+Form response:
+| Warehouse # | SN #1 | SN #2 | SN #3 | Process |
+| 1234        | fftt1 | gghh7 | bbxx1 |         |
+| 4321        | sdfaw | ngh5c | 4g3qz |    x    |
 
+
+Inventory before:
+| Whse        | SN 1  |    | SN 2  |    | SN 3  |    |
+| 4321        | sdfaw |  x | ngh5c |  x | 4g3qz |  x |
+| 1234        | fftt1 |    | d2h26 |    | bbxx1 |    |
+
+Inventory after:
+| Whse        | SN 1  |    | SN 2  |    | SN 3  |    |
+| 4321        | sdfaw |  x | 4g3qz |  x | ngh5c |  x |
+| 1234        | fftt1 |  x | d2h26 |    | bbxx1 |  x |
+
+*/
 
 function Checker() 
 {
