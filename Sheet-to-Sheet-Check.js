@@ -1,6 +1,7 @@
 // Dependant on: https://github.com/preactive/GAS-Helper-Function/blob/master/gco_.js
 // Dependant on: https://github.com/preactive/GAS-Helper-Function/blob/master/isEmpty_.js
-/*
+
+/* ===[Examples Sheets]
 Form response:
 | Warehouse # | SN #1 | SN #2 | SN #3 | Process |
 | 1234        | fftt1 | gghh7 | bbxx1 |         |
@@ -16,8 +17,9 @@ Inventory after:
 | Whse        | SN 1  |    | SN 2  |    | SN 3  |    |
 | 4321        | sdfaw |  x | 4g3qz |  x | ngh5c |  x |
 | 1234        | fftt1 |  x | d2h26 |    | bbxx1 |  x |
-
 */
+// Checking multiple columns to multiple columns across sheets
+
 
 function Checker() 
 {
