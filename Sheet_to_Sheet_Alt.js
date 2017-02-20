@@ -23,50 +23,51 @@ Inventory after:
 
 function Checker() 
 {
-  var ss           = SpreadsheetApp.getActiveSpreadsheet();
+  var ss            = SpreadsheetApp.getActiveSpreadsheet();
   var Fsheet        = ss.getSheetByName("Form Responses");
-  var ResponseData = Fsheet.getDataRange().getValues();
+  var ResponseData  = Fsheet.getDataRange().getValues();
 
   var FormResponseObj = {}
   
-  var ColumnsRef   = ['SN #1','SN #2','SN #3','SN #4','SN #5','SN #6','SN #7','SN #8','SN #9','SN #10'];
-  var OtherColumns = ['Process','Warehouse #'];
+  var FColumnsRef   = ['SN #1','SN #2','SN #3','SN #4','SN #5','SN #6','SN #7','SN #8','SN #9','SN #10'];
+  var FOtherColumns = ['Process','Warehouse #'];
   
-  var Cols          =  gco_(ColumnsRef,Fsheet);
-  var OtherCols     =  gco_(OtherColumns,Fsheet);
+  var FCols          =  gco_(FColumnsRef,Fsheet);
+  var FOCols         =  gco_(FOtherColumns,Fsheet);
 
   for (var i = 1, sL=ResponseData.length; i<sL; i++)
   {
-    if(isEmpty_(ResponseData[i][OtherCols['Warehouse #']])){continue;}
-    if(ResponseData[i][Process] == "x"){continue;}
+    if(isEmpty_(ResponseData[i][FOCols['Warehouse #']])){continue;}
+    if(ResponseData[i][FOCols['Process']] == "Processed"){continue;}
     
     var forInColArr = [];
-    for(FSNs in Cols){forInColArr.push(ResponseData[i][Cols[FSNs]]);
+    for(FSNs in FCols){forInColArr.push(ResponseData[i][FCols[FSNs]]);
+    FormResponseObj[ResponseData[i][FOCols['Warehouse #']]] = forInColArr
     
-    FormResponseObj[ResponseData[i][OtherCols['Warehouse #']]] = forInColArr
-    
-    Fsheet.getRange(i+1,Process+1).setValue("x")
+    Fsheet.getRange(i+1,FOCols['Process']+1).setValue("Processed")
     
   }
   
   var Rsheet        = ss.getSheetByName("Inventory");
   var RecieveData   = Rsheet.getDataRange().getValues();
 
-  var RWhseNum     =  gco_('Whse',Rsheet);
-  var RSN1         =  gco_('SN 1',Rsheet);
-  var RSN2         =  gco_('SN 2',Rsheet);
-  var RSN3         =  gco_('SN 3',Rsheet);
-
+  
+  var RColumnsRef   = ['SN 1','SN 2','SN 3','SN 4','SN 5','SN 6','SN 7','SN 8','SN 9','SN 10'];
+  var ROtherColuns  = ['Whse'];
+  
+  var RCols      =  gco_(RColumnsRef,Rsheet);
+  var ROCols     =  gco_(ROtherColuns,Rsheet);
+    
   for (var l = 1, rdL=RecieveData.length; l<rdL; l++)
   {
-    if(RecieveData[l][RWhseNum] in FormResponseObj)
+    if(RecieveData[l][ROCols['Whse']] in FormResponseObj)
     {
       for(var o = 1; o<3;o++)
       {
-        if(FormResponseObj[RecieveData[l][RWhseNum]].indexOf(RecieveData[l][eval("RSN" + o)]) > -1) 
+        if(FormResponseObj[RecieveData[l][ROCols['Whse']]].indexOf(RecieveData[l][RCols['SN ' + o]]) > -1) 
         { 
-          if(isEmpty_(RecieveData[l][eval("RSN" + o)])){continue;}
-          Rsheet.getRange(1 + l, 2 + eval("RSN"+o)).setValue("X") 
+          if(isEmpty_(RecieveData[l][RCols['SN ' + o]])){continue;}
+          Rsheet.getRange(l+1, RCols['SN ' + o]+2).setValue("X") 
         }
       }
     } 
