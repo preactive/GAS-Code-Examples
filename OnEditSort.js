@@ -9,7 +9,7 @@ function onEdit()
   if (sheetToSort.indexOf(sheet.getName()) == -1){return;}
   
   var editedColumn = sheet.getActiveCell().getColumn();
-  if(sortOrder[i].column == editedColumn)
+  if(sortOrder[0].column == editedColumn)
   {
     sortSheet(sheetToSort,rangeToSort,sortOrder);
   }
@@ -21,6 +21,6 @@ function sortSheet(sheetToSort,rangeToSort,sortOrder)
   {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetToSort[i]);
   var range = sheet.getRange(rangeToSort);
-  range.sort(sortOrder);
+  range.sort(sortOrder[0]);
   }
 }
